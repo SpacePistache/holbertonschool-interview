@@ -3,7 +3,7 @@
 
 
 def canUnlockAll(boxes):
-    unlocked_box = {0}
+    unlocked_box = [0]
     checked_boxes = [0]
     while checked_boxes:
         current_box = checked_boxes.pop()

@@ -6,8 +6,8 @@ def canUnlockAll(boxes):
     unlocked_box = [0]
     checked_boxes = [0]
     while checked_boxes:
-        current = checked_boxes.pop()
-        for box in boxes[current]:
+        current_box = checked_boxes.pop()
+        for box in boxes[current_box]:
             if box < len(boxes) and not unlocked_box:
                 unlocked_box.append(box)
                 checked_boxes.append(box)

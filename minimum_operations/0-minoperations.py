@@ -41,7 +41,7 @@ def minOperations(n):
         return 0
 
     ops = 0
-    divisor = 2 
+    divisor = 2
 
     while n > 1:
         while n % divisor == 0:

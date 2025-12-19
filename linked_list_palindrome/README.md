@@ -1,0 +1,1 @@
+Palindrome exercise in C.

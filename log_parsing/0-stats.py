@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Module that reads stdin line by line and computes metrics"""
 import sys
 
 
@@ -17,6 +18,8 @@ def main():
     try:
         for line in sys.stdin:
             parts = line.strip().split()
+            if len(parts) < 7:
+                continue
 
             try:
                 status_code = int(parts[-2])

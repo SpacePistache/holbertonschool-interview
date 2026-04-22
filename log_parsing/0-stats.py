@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-"""Module that reads stdin line by line and computes metrics"""
 import sys
 
 
@@ -38,9 +37,9 @@ def main():
                 print_stats(total_size, status_counts)
 
     except KeyboardInterrupt:
-        pass
-    finally:
         print_stats(total_size, status_counts)
+        sys.stdout.flush()
+        sys.exit(0)
 
 
 if __name__ == "__main__":

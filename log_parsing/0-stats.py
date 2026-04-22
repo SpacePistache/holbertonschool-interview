@@ -18,8 +18,6 @@ def main():
     try:
         for line in sys.stdin:
             parts = line.strip().split()
-            if len(parts) < 7:
-                continue
 
             try:
                 status_code = int(parts[-2])

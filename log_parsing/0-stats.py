@@ -17,8 +17,6 @@ def main():
 
     try:
         for line in sys.stdin:
-            line_count += 1
-
             parts = line.strip().split()
             if len(parts) < 7:
                 continue
@@ -32,16 +30,19 @@ def main():
             total_size += file_size
 
             if status_code in valid_codes:
-                status_counts[status_code] = status_counts.get(status_code, 0) + 1
+                status_counts[status_code] = (
+                    status_counts.get(status_code, 0) + 1
+                )
+
+            line_count += 1
 
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
 
     except KeyboardInterrupt:
+        pass
+    finally:
         print_stats(total_size, status_counts)
-        raise
-
-    print_stats(total_size, status_counts)
 
 
 if __name__ == "__main__":

@@ -1,62 +1,67 @@
 #include "slide_line.h"
 
 /**
- * compress_left - moves all non-zero values to the left
+ * move_left - moves non-zero values to the left
  * @line: array of integers
  * @size: size of array
  */
-static void compress_left(int *line, size_t size)
+static void move_left(int *line, size_t size)
 {
-	size_t i, pos = 0;
+	size_t i, j;
 
+	j = 0;
 	for (i = 0; i < size; i++)
 	{
 		if (line[i] != 0)
 		{
-			line[pos] = line[i];
-			if (pos != i)
+			line[j] = line[i];
+			if (i != j)
 				line[i] = 0;
-			pos++;
+			j++;
 		}
 	}
 }
 
 /**
- * compress_right - moves all non-zero values to the right
+ * move_right - moves non-zero values to the right
  * @line: array of integers
  * @size: size of array
  */
-static void compress_right(int *line, size_t size)
+static void move_right(int *line, size_t size)
 {
-	size_t i, pos = size - 1;
+	size_t i, j;
 
-	for (i = size; i-- > 0;)
+	j = size;
+	while (j > 0)
+		j--;
+
+	i = size;
+	while (i > 0)
 	{
+		i--;
 		if (line[i] != 0)
 		{
-			line[pos] = line[i];
-			if (pos != i)
+			line[j] = line[i];
+			if (i != j)
 				line[i] = 0;
-			if (pos > 0)
-				pos--;
+			if (j > 0)
+				j--;
 		}
 	}
 }
 
 /**
- * slide_left - slides and merges left
- * @line: array
- * @size: array size
+ * merge_left - merges values to the left
+ * @line: array of integers
+ * @size: size of array
  */
-static void slide_left(int *line, size_t size)
+static void merge_left(int *line, size_t size)
 {
 	size_t i;
 
-	compress_left(line, size);
-
 	for (i = 0; i + 1 < size; i++)
 	{
-		if (line[i] && line[i] == line[i + 1])
+		if (line[i] != 0 && line[i] == line[i + 1])
 		{
 			line[i] *= 2;
 			line[i + 1] = 0;
@@ -64,23 +69,23 @@ static void slide_left(int *line, size_t size)
 		}
 	}
 
-	compress_left(line, size);
+	move_left(line, size);
 }
 
 /**
- * slide_right - slides and merges right
- * @line: array
- * @size: array size
+ * merge_right - merges values to the right
+ * @line: array of integers
+ * @size: size of array
  */
-static void slide_right(int *line, size_t size)
+static void merge_right(int *line, size_t size)
 {
 	size_t i;
 
-	compress_right(line, size);
-
-	for (i = size - 1; i > 0; i--)
+	i = size;
+	while (i > 1)
 	{
-		if (line[i] && line[i] == line[i - 1])
+		i--;
+		if (line[i] != 0 && line[i] == line[i - 1])
 		{
 			line[i] *= 2;
 			line[i - 1] = 0;
@@ -88,28 +93,36 @@ static void slide_right(int *line, size_t size)
 		}
 	}
 
-	compress_right(line, size);
+	move_right(line, size);
 }
 
 /**
  * slide_line - slides and merges an array
  * @line: array of integers
  * @size: number of elements
- * @direction: slide direction
+ * @direction: direction to slide
  *
  * Return: 1 on success, 0 on failure
  */
 int slide_line(int *line, size_t size, int direction)
 {
-	if (!line)
+	if (line == NULL || size == 0)
 		return (0);
 
 	if (direction == SLIDE_LEFT)
-		slide_left(line, size);
+	{
+		move_left(line, size);
+		merge_left(line, size);
+	}
 	else if (direction == SLIDE_RIGHT)
-		slide_right(line, size);
+	{
+		move_right(line, size);
+		merge_right(line, size);
+	}
 	else
+	{
 		return (0);
+	}
 
 	return (1);
 }

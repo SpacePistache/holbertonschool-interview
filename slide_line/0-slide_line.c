@@ -77,20 +77,25 @@ static void merge_left(int *line, size_t size)
  * @line: array of integers
  * @size: size of array
  */
+/**
+ * merge_right - merges values to the right
+ * @line: array of integers
+ * @size: size of array
+ */
 static void merge_right(int *line, size_t size)
 {
 	size_t i;
 
-	i = size;
-	while (i > 1)
+	i = size - 1;
+	while (i > 0)
 	{
-		i--;
 		if (line[i] != 0 && line[i] == line[i - 1])
 		{
 			line[i] *= 2;
 			line[i - 1] = 0;
 			i--;
 		}
+		i--;
 	}
 
 	move_right(line, size);

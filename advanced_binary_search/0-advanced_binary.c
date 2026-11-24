@@ -35,17 +35,13 @@ static int search_rec(int *array, size_t left, size_t right, int value)
 	print_subarray(array, left, right);
 	mid = left + (right - left) / 2;
 
-	if (array[mid] == value)
-	{
-		if (mid == left || array[mid - 1] != value)
-			return ((int)mid);
-		return (search_rec(array, left, mid, value));
-	}
 	if (array[mid] < value)
 		return (search_rec(array, mid + 1, right, value));
-	if (mid == left)
+	if (array[mid] == value && (mid == left || array[mid - 1] != value))
+		return ((int)mid);
+	if (left == right)
 		return (-1);
-	return (search_rec(array, left, mid - 1, value));
+	return (search_rec(array, left, mid, value));
 }
 
 /**
